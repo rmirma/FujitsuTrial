@@ -21,43 +21,27 @@ public class Config {
     }
 
     public double getRegionalBaseFee(City city, VehicleType vehicleType) {
-        switch (city) {
-            case TALLINN:
-                switch (vehicleType) {
-                    case CAR:
-                        return 4.0;
-                    case SCOOTER:
-                        return 3.5;
-                    case BIKE:
-                        return 3.0;
-                }
-                break;
-            case TARTU:
-                switch (vehicleType) {
-                    case CAR:
-                        return 3.5;
-                    case SCOOTER:
-                        return 3.0;
-                    case BIKE:
-                        return 2.5;
-                }
-                break;
-            case PARNU:
-                switch (vehicleType) {
-                    case CAR:
-                        return 3.0;
-                    case SCOOTER:
-                        return 2.5;
-                    case BIKE:
-                        return 2.0;
-                }
-                break;
-        }
-        return 0.0;
+        return switch (city) {
+            case TALLINN -> switch (vehicleType) {
+                case CAR -> 4.0;
+                case SCOOTER -> 3.5;
+                case BIKE -> 3.0;
+            };
+            case TARTU -> switch (vehicleType) {
+                case CAR -> 3.5;
+                case SCOOTER -> 3.0;
+                case BIKE -> 2.5;
+            };
+            case PARNU -> switch (vehicleType) {
+                case CAR -> 3.0;
+                case SCOOTER -> 2.5;
+                case BIKE -> 2.0;
+            };
+        };
     }
 
     public double getAirTemperatureExtraFee(WeatherDataEntity weatherData, VehicleType vehicleType) {
-        double airTemperature = weatherData.getAirTemperature();
+        double airTemperature = weatherData.getAirtemperature();
         if (vehicleType == VehicleType.SCOOTER || vehicleType == VehicleType.BIKE) {
             if (airTemperature < -10) {
                 return 1.0;
@@ -69,7 +53,7 @@ public class Config {
     }
 
     public double getWindSpeedExtraFee(WeatherDataEntity weatherData, VehicleType vehicleType) throws Exception {
-        double windSpeed = weatherData.getWindSpeed();
+        double windSpeed = weatherData.getWindspeed();
 
         if (vehicleType == VehicleType.BIKE) {
             if (windSpeed >= 10 && windSpeed <= 20) {
@@ -82,12 +66,12 @@ public class Config {
     }
 
     public double getWeatherPhenomenonExtraFee(WeatherDataEntity weatherData, VehicleType vehicleType) throws Exception {
-        String weatherPhenomenon = weatherData.getWeatherPhenomenon();
+        String weatherPhenomenon = weatherData.getWeatherphenomenon();
 
         if (vehicleType == VehicleType.SCOOTER || vehicleType == VehicleType.BIKE) {
             if (weatherPhenomenon.contains("snow") || weatherPhenomenon.contains("sleet")) {
                 return 1.0;
-            } else if (weatherPhenomenon.contains("rain")) {
+            } else if (weatherPhenomenon.contains("rain") || weatherPhenomenon.contains("shower")){
                 return 0.5;
             } else if (weatherPhenomenon.contains("glaze") || weatherPhenomenon.contains("hail") || weatherPhenomenon.contains("thunder")) {
                 throw new Exception("Usage of selected vehicle type is forbidden");

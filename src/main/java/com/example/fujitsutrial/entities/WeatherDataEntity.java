@@ -1,11 +1,11 @@
 package com.example.fujitsutrial.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
-import java.time.LocalDateTime;
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Entity
-@Table(name = "weather_data")
+@Table(name = "WEATHER_DATA")
 public class WeatherDataEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,73 +15,59 @@ public class WeatherDataEntity {
     private String stationName;
 
     @Column(nullable = false)
-    private String wmoCode;
+    private String wmocode;
 
     @Column(nullable = false)
-    private Double airTemperature;
+    private Double airtemperature;
 
     @Column(nullable = false)
-    private Double windSpeed;
+    private Double windspeed;
 
     @Column(nullable = false)
-    private String weatherPhenomenon;
+    private String weatherphenomenon;
 
     @Column(nullable = false)
-    private LocalDateTime timestamp;
+    private String timestamp;
 
-    public Long getId() {
-        return id;
+
+    public Double getAirtemperature() {
+        return airtemperature;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Double getWindspeed() {
+        return windspeed;
     }
 
-    public String getStationName() {
-        return stationName;
+    public String getWeatherphenomenon() {
+        return weatherphenomenon;
+    }
+
+    public String getTimestamp() {
+        return timestamp;
     }
 
     public void setStationName(String stationName) {
         this.stationName = stationName;
     }
 
-    public String getWmoCode() {
-        return wmoCode;
+    public void setWmocode(String wmocode) {
+        this.wmocode = wmocode;
     }
 
-    public void setWmoCode(String wmoCode) {
-        this.wmoCode = wmoCode;
+    public void setAirtemperature(Double airtemperature) {
+        this.airtemperature = airtemperature;
     }
 
-    public Double getAirTemperature() {
-        return airTemperature;
+    public void setWindspeed(Double windspeed) {
+        this.windspeed = windspeed;
     }
 
-    public void setAirTemperature(Double airTemperature) {
-        this.airTemperature = airTemperature;
+    public void setWeatherphenomenon(String weatherphenomenon) {
+        this.weatherphenomenon = weatherphenomenon;
     }
 
-    public Double getWindSpeed() {
-        return windSpeed;
-    }
-
-    public void setWindSpeed(Double windSpeed) {
-        this.windSpeed = windSpeed;
-    }
-
-    public String getWeatherPhenomenon() {
-        return weatherPhenomenon;
-    }
-
-    public void setWeatherPhenomenon(String weatherPhenomenon) {
-        this.weatherPhenomenon = weatherPhenomenon;
-    }
-
-    public LocalDateTime getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(LocalDateTime timestamp) {
+    public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
     }
+
 }

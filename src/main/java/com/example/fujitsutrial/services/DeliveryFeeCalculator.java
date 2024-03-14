@@ -16,18 +16,18 @@ public class DeliveryFeeCalculator {
     }
 
     public double calculateDeliveryFee(Config.City city, Config.VehicleType vehicleType) throws Exception {
-        WeatherDataEntity latestWeatherData = weatherDataRepository.findTopByStationNameOrderByTimestampDesc(city.name());
+        WeatherDataEntity latestWeatherData = switch (city.name()) {
+            case "TALLINN" -> weatherDataRepository.findTopByStationNameOrderByTimestampDesc("Tallinn-Harku");
+            case "TARTU" -> weatherDataRepository.findTopByStationNameOrderByTimestampDesc("Tartu-Tõravere");
+            case "PÄRNU" -> weatherDataRepository.findTopByStationNameOrderByTimestampDesc("Pärnu");
+            default -> throw new Exception("City not found");
+        };
 
         double regionalBaseFee = config.getRegionalBaseFee(city, vehicleType);
         double airTemperatureExtraFee = config.getAirTemperatureExtraFee(latestWeatherData, vehicleType);
         double windSpeedExtraFee = config.getWindSpeedExtraFee(latestWeatherData, vehicleType);
         double weatherPhenomenonExtraFee = config.getWeatherPhenomenonExtraFee(latestWeatherData, vehicleType);
 
-
-        double totalDeliveryFee = regionalBaseFee + airTemperatureExtraFee + windSpeedExtraFee + weatherPhenomenonExtraFee;
-
-
-
-        return totalDeliveryFee;
+        return regionalBaseFee + airTemperatureExtraFee + windSpeedExtraFee + weatherPhenomenonExtraFee;
     }
 }
