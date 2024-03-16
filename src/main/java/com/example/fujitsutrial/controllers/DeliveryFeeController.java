@@ -18,6 +18,12 @@ public class DeliveryFeeController {
         this.deliveryFeeCalculator = deliveryFeeCalculator;
     }
 
+    /**
+     * This method is called when a GET request is made to /delivery-fee. It calls the calculateDeliveryFee method with the city and vehicleType parameters.
+     * @param city The city where the delivery is being made.
+     * @param vehicleType The type of vehicle being used for delivery.
+     * @return The delivery fee.
+     */
     @GetMapping("/delivery-fee")
     public ResponseEntity<Double> getDeliveryFee(
             @RequestParam("city") Config.City city,

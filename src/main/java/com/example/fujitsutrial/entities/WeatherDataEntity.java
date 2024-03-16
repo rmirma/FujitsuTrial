@@ -29,6 +29,13 @@ public class WeatherDataEntity {
     @Column(nullable = false)
     private String timestamp;
 
+    public String getStationName() {
+        return stationName;
+    }
+
+    public String getWmocode() {
+        return wmocode;
+    }
 
     public Double getAirtemperature() {
         return airtemperature;

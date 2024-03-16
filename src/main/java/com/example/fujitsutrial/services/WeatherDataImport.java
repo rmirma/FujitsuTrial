@@ -51,7 +51,6 @@ public class WeatherDataImport {
 
     /**
      * Parse the XML data and return a list of WeatherDataEntity objects
-     *
      * @param xmlData the XML data to be parsed
      * @return a list of WeatherDataEntity objects
      * @throws IOException if the XML data cannot be parsed
@@ -72,6 +71,12 @@ public class WeatherDataImport {
         return weatherDataEntities;
     }
 
+    /**
+     * Create a WeatherDataEntity object from the station data and timestamp
+     * @param stationData the station data to be parsed
+     * @param timestamp   the timestamp of the weather data
+     * @return a WeatherDataEntity object
+     */
     private static WeatherDataEntity getWeatherDataEntity(String stationData, String timestamp) {
         WeatherDataEntity weatherDataEntity = new WeatherDataEntity();
 
@@ -89,6 +94,10 @@ public class WeatherDataImport {
         return weatherDataRepository.findAll();
     }
 
+    /**
+     * Import up-to-date weather data from the external API and save it to the database
+     * Uses a cron expression to schedule the import every hour at 15 minutes past the hour
+     */
     @Scheduled(cron = "0 15 * * * *")
     public void importWeatherData() {
         String xmlData = fetchWeatherData();

@@ -15,6 +15,13 @@ public class DeliveryFeeCalculator {
         this.config = config;
     }
 
+    /**
+     * It first finds the latest weather data for the given city. Then it calculates the delivery fee based on the weather data.
+     * @param city        - city where the delivery is made
+     * @param vehicleType - type of the vehicle used for delivery
+     * @return delivery fee
+     * @throws Exception if city is not found
+     */
     public double calculateDeliveryFee(Config.City city, Config.VehicleType vehicleType) throws Exception {
         WeatherDataEntity latestWeatherData = switch (city.name()) {
             case "TALLINN" -> weatherDataRepository.findTopByStationNameOrderByTimestampDesc("Tallinn-Harku");

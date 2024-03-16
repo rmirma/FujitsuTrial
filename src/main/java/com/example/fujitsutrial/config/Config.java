@@ -20,6 +20,12 @@ public class Config {
         TALLINN, TARTU, PARNU
     }
 
+    /**
+     * Returns the regional base fee for the given city and vehicle type.
+     * @param city        the city
+     * @param vehicleType the vehicle type
+     * @return the regional base fee
+     */
     public double getRegionalBaseFee(City city, VehicleType vehicleType) {
         return switch (city) {
             case TALLINN -> switch (vehicleType) {
@@ -40,6 +46,12 @@ public class Config {
         };
     }
 
+    /**
+     * Returns the extra fee based on the air temperature for the given weather data and vehicle type.
+     * @param weatherData the weather data
+     * @param vehicleType the vehicle type
+     * @return the extra fee
+     */
     public double getAirTemperatureExtraFee(WeatherDataEntity weatherData, VehicleType vehicleType) {
         double airTemperature = weatherData.getAirtemperature();
         if (vehicleType == VehicleType.SCOOTER || vehicleType == VehicleType.BIKE) {
@@ -52,6 +64,13 @@ public class Config {
         return 0.0;
     }
 
+    /**
+     * Returns the extra fee based on the wind speed for the given weather data and vehicle type.
+     * @param weatherData the weather data
+     * @param vehicleType the vehicle type
+     * @return the extra fee
+     * @throws Exception if the wind speed is too high for the given vehicle type
+     */
     public double getWindSpeedExtraFee(WeatherDataEntity weatherData, VehicleType vehicleType) throws Exception {
         double windSpeed = weatherData.getWindspeed();
 
@@ -65,6 +84,13 @@ public class Config {
         return 0.0;
     }
 
+    /**
+     * Returns the extra fee based on the weather phenomenon for the given weather data and vehicle type.
+     * @param weatherData the weather data
+     * @param vehicleType the vehicle type
+     * @return the extra fee
+     * @throws Exception if the weather phenomenon is too severe for the given vehicle type
+     */
     public double getWeatherPhenomenonExtraFee(WeatherDataEntity weatherData, VehicleType vehicleType) throws Exception {
         String weatherPhenomenon = weatherData.getWeatherphenomenon();
 
